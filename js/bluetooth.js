@@ -133,15 +133,17 @@ const HydrixBLE = (() => {
   }
 
   function send(cmd) {
-    if (!rxChar) {
-      log("warn", `محاولة إرسال "${cmd}" بدون اتصال فعّال — الأمر لم يُرسل.`);
-      return false;
-    }
-    const bytes = new TextEncoder().encode(cmd + "\n");
-    rxChar.writeValue(bytes).catch((err) => log("error", `فشل إرسال "${cmd}": ${err.message || err}`));
-    return true;
-  }
-
+  if (!rxChar) return false;
+     const bytes = new TextEncoder().encode(cmd + "\n");
+  // البلوتوث مايقبلش عمليتين كتابة في نفس اللحظة — لو بعتنا
+  // أمرين ورا بعض من غير استنى، التاني بيفشل بخطأ
+  // "GATT operation already in progress". الطابور ده بيخلي
+  // كل أمر يستنى اللي قبله يخلص فعليًا قبل ما يتبعت.
+     writeQueue = writeQueue
+        .then(() => rxChar.writeValue(bytes))
+        .catch((err) => console.warn("BLE write failed:", err));
+     return true;
+}
   function isConnected() {
     return !!(device && device.gatt && device.gatt.connected && rxChar);
   }
