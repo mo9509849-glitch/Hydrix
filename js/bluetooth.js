@@ -20,7 +20,8 @@ const HydrixBLE = (() => {
 
   let device = null;
   let rxChar = null;
-  let onMessage = null;    // (obj|string) => void
+  let writeQueue = Promise.resolve(); // طابور تسلسلي لأوامر الكتابة
+  let onMessage = null;
   let onStateChange = null; // (connected:boolean) => void
   let onLog = null;         // (level, message) => void  — تشخيص اختياري للواجهة
 
