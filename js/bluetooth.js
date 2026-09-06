@@ -130,6 +130,7 @@ const HydrixBLE = (() => {
   function disconnect() {
     if (device && device.gatt && device.gatt.connected) device.gatt.disconnect();
     rxChar = null;
+    writeQueue = Promise.resolve();
   }
 
   function send(cmd) {
