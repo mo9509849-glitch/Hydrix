@@ -15,7 +15,7 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const state = {
   connected: false,
   pumpOn: false,
-  smartActive: JSON.parse(localStorage.getItem("hydrix_smart") ?? "true"),
+  smartActive: JSON.parse(localStorage.getItem("hydrix_smart") ?? "false"),
   moisture: 45,
   temp: 28,
   hum: 55,
