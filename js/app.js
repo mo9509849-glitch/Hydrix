@@ -141,7 +141,7 @@ function notify(body) {
   try { new Notification("Hydrix", { body }); } catch { /* الإشعارات غير متاحة */ }
 }
 
-const PUMP_CHECK_DELAY = 5 * 60 * 1000;
+const PUMP_CHECK_DELAY = 5 * 1000;
 const MIN_MOISTURE_RISE = 2;
 
 function startIrrigationCheck(source) {
@@ -903,7 +903,7 @@ function render() {
     diag.textContent = state.pumpFault.message;
     diag.classList.remove("hidden");
   } else if (state.irrigationCheck) {
-    diag.textContent = "جاري فحص كفاءة المضخة — سيتم مقارنة الرطوبة بعد 5 دقائق من توقف الري.";
+    diag.textContent = "جاري فحص كفاءة المضخة — سيتم مقارنة الرطوبة بعد 5 ثواني من توقف الري.";
     diag.classList.remove("hidden");
   } else {
     diag.classList.add("hidden");
